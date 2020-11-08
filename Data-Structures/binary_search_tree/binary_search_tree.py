@@ -17,20 +17,93 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        #RECURSIVE PLAN
+        #if value < root
+        #if left child is none
+                #add here
+            #else
+        #if value >= root(dupes to right)
+            #if right child is none
+                #add here
+            #else
+                #recursive call
+        if value < self.value:
+            if self.left is None:
+                self.left = BSTNode(value)
+            else:
+                self.left.insert(value)
+
+        if value >= self.value:
+            if self.right is None:
+                self.right = BSTNode(value)
+            else:
+                self.right.insert(value)
+
+        
+    #ITERATIVE PLAN
+    #while not at the botttom, keep going
+        #go left
+            #if the left child is none, 
+                # add here
+                #exit loop
+            
+        #go right, same values go right too
+            #if right child is none 
+                #add here
+                #exit loop
+
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        if self.value is target:
+            return True
+        elif self.right == None and self.left == None:
+            return False
+        elif self.value > target:
+            return self.left.contains(target)
+        else:
+            return self.right.contains(target)
+        # else:
+        #     #go left
+        #     if target < self.value:
+        #         if self.left is target:
+        #             return True
+        #         else:
+        #             self.contains(target)
+
+        #     #go right
+        #     elif target >= self.value:
+        #         if self.right is target:
+        #             return True
+        #         else:
+        #             self.contains(target)
+        #     return False
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        #go right until you cannot, return max
+        if self.right is None:
+            return self.value
+        else:
+            return self.right.get_max()
+            
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        #one side than other
+        #call fun(value)
+        fn(self.value)
+
+        #base
+        if self.left is None and self.right is None:
+            return
+
+        #Recursive
+        if self.left:
+            self.left.for_each(fn)
+        if self.right:
+            self.right.for_each(fn)
 
     # Part 2 -----------------------
 
@@ -47,7 +120,9 @@ class BSTNode:
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        nodes = []
+        nodes.push(self.value)
+        
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -58,6 +133,9 @@ class BSTNode:
 
     # Print Post-order recursive DFT
     def post_order_dft(self):
+        pass
+
+    def in_order_dft(self):
         pass
 
 """

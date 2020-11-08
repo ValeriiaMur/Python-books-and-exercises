@@ -9,8 +9,10 @@ class ListNode:
         self.next = next
 
     def delete(self):
-        self.next.prev = self.prev
-        self.prev.next = self.next
+        if self.prev:
+            self.prev.next = self.next
+        if self.next:
+            self.next.prev = self.prev
             
 """
 Our doubly-linked list class. It holds references to 
@@ -48,20 +50,11 @@ class DoublyLinkedList:
     Returns the value of the removed Node.
     """
     def remove_from_head(self):
-        if self.head is None:
-            return None
-        elif self.head is self.tail:
-            temp = self.head.value
-            self.head = None
-            self.tail = None
-            self.length -= 1
-            return temp
-        else:
-            temp = self.head
-            self.delete(self.head)
-            self.head = temp.next
-            self.length -= 1
-            return temp.value
+        value = self.head.value
+
+        self.delete(self.head)
+
+        return value
         
             
     """
@@ -139,11 +132,9 @@ class DoublyLinkedList:
             node.delete()
         elif node == self.tail:
             self.tail = node.prev
-            node.next.prev = node.prev
-            node.prev.next = node.next
+            node.delete()
         else:
-            node.next.prev = node.prev
-            node.prev.next = node.next
+            node.delete()
 
         self.length = self.length - 1
 
@@ -153,4 +144,14 @@ class DoublyLinkedList:
     in the List.
     """
     def get_max(self):
-        return 1
+        if self.head is None:
+            return None
+        cur_node = self.head
+        max_value = self.head.value
+        while cur_node:
+            if cur_node.value > max_value:
+                max_value = cur_node.value
+            cur_node= cur_node.next
+
+        #return max
+        return max_value
